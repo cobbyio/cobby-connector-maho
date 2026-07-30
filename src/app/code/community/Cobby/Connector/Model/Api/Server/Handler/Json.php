@@ -13,4 +13,24 @@ class Cobby_Connector_Model_Api_Server_Handler_Json extends Mage_Api_Model_Serve
     {
         return $result;
     }
+
+    /**
+     * The parent only converts Exception into an API fault. Under PHP 8 a malformed
+     * request (wrong argument count, wrong argument type) raises an Error instead,
+     * which would escape as an HTML fatal page rather than a JSON-RPC fault.
+     *
+     * @param string $sessionId
+     * @param string $apiPath
+     * @param array $args
+     * @return mixed
+     */
+    public function call($sessionId, $apiPath, $args = [])
+    {
+        try {
+            return parent::call($sessionId, $apiPath, $args);
+        } catch (Error $e) {
+            Mage::logException($e);
+            $this->_fault('internal', null, $e->getMessage());
+        }
+    }
 }

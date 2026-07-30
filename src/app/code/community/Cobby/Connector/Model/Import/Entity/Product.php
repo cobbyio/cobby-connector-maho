@@ -226,9 +226,14 @@ class Cobby_Connector_Model_Import_Entity_Product extends Mage_ImportExport_Mode
 
                     // 1. Entity phase
                     if (isset($this->_oldSku[$rowSku])) { // existing row
+                        // entity_type_id/attribute_set_id must be present: _saveProductEntity()
+                        // writes these rows with insertOnDuplicate(), so the INSERT branch of the
+                        // statement still has to satisfy the attribute_set_id foreign key.
                         $entityRowsUp[] = array(
-                            'updated_at' => now(),
-                            'entity_id' => $this->_oldSku[$rowSku]['entity_id']
+                            'updated_at' => Mage::app()->getLocale()->formatDateForDb('now'),
+                            'entity_id' => $this->_oldSku[$rowSku]['entity_id'],
+                            'entity_type_id' => $this->_entityTypeId,
+                            'attribute_set_id' => $this->_oldSku[$rowSku]['attr_set_id']
                         );
                         $productIds[] = $this->_oldSku[$rowSku]['entity_id'];
                     } else { // new row
@@ -238,8 +243,8 @@ class Cobby_Connector_Model_Import_Entity_Product extends Mage_ImportExport_Mode
                                 'attribute_set_id' => $this->_newSku[$rowSku]['attr_set_id'],
                                 'type_id' => $this->_newSku[$rowSku]['type_id'],
                                 'sku' => $rowSku,
-                                'created_at' => now(),
-                                'updated_at' => now()
+                                'created_at' => Mage::app()->getLocale()->formatDateForDb('now'),
+                                'updated_at' => Mage::app()->getLocale()->formatDateForDb('now')
                             );
                             $productsQty++;
                         } else {
@@ -320,7 +325,7 @@ class Cobby_Connector_Model_Import_Entity_Product extends Mage_ImportExport_Mode
      */
     protected function _getStrftimeFormat()
     {
-        return Varien_Date::convertZendToStrftime(Varien_Date::DATETIME_INTERNAL_FORMAT, true, true);
+        return Mage_Core_Model_Locale::DATETIME_FORMAT;
     }
 
     /**
@@ -409,7 +414,7 @@ class Cobby_Connector_Model_Import_Entity_Product extends Mage_ImportExport_Mode
             if ($attrValue != self::COBBY_DEFAULT) {
                 if ('datetime' == $attribute->getBackendType()) {
                     if ($attrValue !== null && $attrValue != '')
-                        $attrValue = gmstrftime($this->_getStrftimeFormat(), strtotime($attrValue));
+                        $attrValue = gmdate($this->_getStrftimeFormat(), strtotime($attrValue));
                     else
                         $attrValue = null;
                 } else if ('decimal' == $attribute->getBackendType() && $attrValue === '') {

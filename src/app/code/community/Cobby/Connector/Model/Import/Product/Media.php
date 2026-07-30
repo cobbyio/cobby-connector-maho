@@ -722,7 +722,7 @@ class Cobby_Connector_Model_Import_Product_Media extends Cobby_Connector_Model_I
 
     private function getImageAttributeData($request)
     {
-        // @var $collection Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Attribute_Collection /
+        // @var $collection Mage_Catalog_Model_Resource_Product_Attribute_Collection /
         $collection = Mage::getResourceModel('catalog/product_attribute_collection');
         $collection->setEntityTypeFilter($this->_entityTypeId);
         $collection->setFrontendInputTypeFilter('media_image');

@@ -111,9 +111,8 @@ class Cobby_Connector_Model_Import_Product_Stock extends Cobby_Connector_Model_I
 
             if ($helper->isQty($productData['product_type'])) {
                 if ($stockItem->verifyNotification()) {
-                    $stockItem->setLowStockDate(Mage::app()->getLocale()
-                        ->date(null, null, null, false)
-                        ->toString(Varien_Date::DATETIME_INTERNAL_FORMAT)
+                    $stockItem->setLowStockDate(
+                        (new DateTime())->format(Mage_Core_Model_Locale::DATETIME_FORMAT)
                     );
                 }
                 $stockItem->setStockStatusChangedAutomatically((int)!$stockItem->verifyStock());

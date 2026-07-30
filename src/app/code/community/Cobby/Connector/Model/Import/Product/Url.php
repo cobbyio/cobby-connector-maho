@@ -162,7 +162,7 @@ class Cobby_Connector_Model_Import_Product_Url extends Cobby_Connector_Model_Imp
     protected function _generateNextUrlKeyWithSuffix($productId, $prefixValue)
     {
         $eavHelper = $this->_eavHelper = Mage::getResourceHelper('eav');
-        $requestPathField = new Zend_Db_Expr($this->connection->quoteIdentifier('value'));
+        $requestPathField = new Varien_Db_Expr($this->connection->quoteIdentifier('value'));
         //select increment part of request path and cast expression to integer
         $urlIncrementPartExpression = $eavHelper->getCastToIntExpression(
             $this->connection->getSubstringSql(
@@ -192,7 +192,7 @@ class Cobby_Connector_Model_Import_Product_Url extends Cobby_Connector_Model_Imp
         $select = $this->connection->select();
         $select->from(
             $this->urlKeyAttribute->getBackendTable(),
-            new Zend_Db_Expr('MAX(ABS(' . $urlIncrementPartExpression . '))')
+            new Varien_Db_Expr('MAX(ABS(' . $urlIncrementPartExpression . '))')
         )
             ->where('value LIKE :url_key')
             ->where('entity_id <> :entity_id')

@@ -24,6 +24,7 @@ class Cobby_Connector_CobbyController extends Mage_Api_Controller_Action
     /**
      * Access xml-rpc api as json
      */
+    #[\Maho\Config\Route('/cobby-api/cobby/json', name: 'cobby-api.cobby.json')]
     public function jsonAction()
     {
         $this->_getServer()
