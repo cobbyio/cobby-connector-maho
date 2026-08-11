@@ -3,5 +3,8 @@
 	"description" : "This extension for Maho provides a direct integration of the cobby management methods to your Maho shop.",
 	"license": "OSL-3.0",
 	"version" : "2.4.2",
-	"type" : "magento-module"
+	"type" : "magento-module",
+	"require": {
+		"laminas/laminas-json-server": "^3.10"
+	}
 }
