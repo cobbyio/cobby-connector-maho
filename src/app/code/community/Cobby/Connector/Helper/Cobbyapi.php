@@ -40,13 +40,17 @@ class Cobby_Connector_Helper_Cobbyapi extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * get rest client
+     * get http client
      *
-     * @return Zend_Rest_Client
+     * Maho ships neither Zend_Rest_Client nor Zend_Http_Client (Zend Framework 1
+     * was removed), so we use Symfony's HttpClient, the same stack Maho core uses
+     * for outbound requests (e.g. Mage_Directory_Model_Currency_Import_Fixerio).
+     *
+     * @return \Symfony\Contracts\HttpClient\HttpClientInterface
      */
     private function getClient()
     {
-        return new Zend_Rest_Client(self::COBBY_API);
+        return \Symfony\Component\HttpClient\HttpClient::create(array('timeout' => 60));
     }
 
     /**
@@ -61,16 +65,22 @@ class Cobby_Connector_Helper_Cobbyapi extends Mage_Core_Helper_Abstract
     public function restPost($method, $data = null)
     {
         $client = $this->getClient();
-        $httpClient = $client->getHttpClient();
-        $httpClient->setConfig(array('timeout' => 60));
-        $client->setHttpClient($httpClient);
+        $url = rtrim(self::COBBY_API, '/') . '/' . ltrim($method, '/');
 
-        $response = $client->restPost('/' . $method, $data);
-        if ($response->getStatus() != 200 && $response->getStatus() != 201) {
-            $errorRestResultAsObject = Zend_Json::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
-            throw new Exception($errorRestResultAsObject->message);
+        $response = $client->request('POST', $url, array(
+            'body' => is_array($data) ? $data : array(),
+        ));
+
+        // Pass false so HTTP error status codes do not throw here, letting us read
+        // the error body and surface the service message like the old client did.
+        $status = $response->getStatusCode();
+        $body = $response->getContent(false);
+        $restResultAsObject = json_decode($body);
+
+        if ($status != 200 && $status != 201) {
+            $message = isset($restResultAsObject->message) ? $restResultAsObject->message : $body;
+            throw new Exception($message);
         }
-        $restResultAsObject = Zend_Json::decode($response->getBody(), Zend_Json::TYPE_OBJECT);
 
         return $restResultAsObject;
     }
