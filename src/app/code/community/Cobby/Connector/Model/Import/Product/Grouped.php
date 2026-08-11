@@ -120,7 +120,7 @@ class Cobby_Connector_Model_Import_Product_Grouped extends Cobby_Connector_Model
         if ($linksData['attr_product_ids']) {
             $savedData = $this->connection->fetchPairs($this->connection->select()
                     ->from($mainTable, array(
-                        new Zend_Db_Expr('CONCAT_WS(" ", product_id, linked_product_id)'), 'link_id'
+                        new Varien_Db_Expr('CONCAT_WS(" ", product_id, linked_product_id)'), 'link_id'
                     ))
                     ->where(
                         'product_id IN (?) AND link_type_id = ' . $groupedLinkId,

@@ -43,16 +43,16 @@ abstract class Cobby_Connector_Model_Import_Product_Abstract extends Mage_Api_Mo
      * @return $this
      */
     protected function touchProducts($productIds){
-        $entityRowsUp = array();
-
-        foreach($productIds as $productId) {
-            $entityRowsUp[] = array( 'updated_at' => now(), 'entity_id' => $productId );
-        }
-
-        if(count($entityRowsUp) > 0) {
+        if (count($productIds) > 0) {
             Mage::getModel('cobby_connector/product')->updateHash($productIds);
             $productTable = $this->resourceModel->getTableName('catalog/product');
-            $this->connection->insertOnDuplicate($productTable, $entityRowsUp, array('updated_at') );
+            // Plain UPDATE rather than insertOnDuplicate(): these rows always exist, and the
+            // INSERT branch would omit attribute_set_id and break its foreign key.
+            $this->connection->update(
+                $productTable,
+                array('updated_at' => Mage::app()->getLocale()->formatDateForDb('now')),
+                array('entity_id IN (?)' => $productIds)
+            );
         }
 
         return $this;

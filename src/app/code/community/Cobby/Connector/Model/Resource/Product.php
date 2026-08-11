@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0).
  */
 
-class Cobby_Connector_Model_Resource_Product extends Mage_Core_Model_Mysql4_Abstract
+class Cobby_Connector_Model_Resource_Product extends Mage_Core_Model_Resource_Db_Abstract
 {
     protected function _construct()
     {
@@ -21,7 +21,7 @@ class Cobby_Connector_Model_Resource_Product extends Mage_Core_Model_Mysql4_Abst
     {
         $select = $this->_getWriteAdapter()
             ->select()
-            ->from(array('cp' => $this->getTable('catalog/product')), array('entity_id', new Zend_Db_Expr('"'. $hash . '" as hash')))
+            ->from(array('cp' => $this->getTable('catalog/product')), array('entity_id', new Varien_Db_Expr($this->_getWriteAdapter()->quote($hash))))
             ->where('cp.entity_id IN (?)', $ids)
             ->insertFromSelect($this->getMainTable(), array('entity_id', 'hash'), Varien_Db_Adapter_Interface::INSERT_ON_DUPLICATE);
 

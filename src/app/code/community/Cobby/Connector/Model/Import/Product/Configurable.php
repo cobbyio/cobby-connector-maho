@@ -104,7 +104,7 @@ class Cobby_Connector_Model_Import_Product_Configurable extends Cobby_Connector_
     {
         $result = array();
 
-        /* @var $collection Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Attribute_Collection */
+        /* @var $collection Mage_Catalog_Model_Resource_Product_Attribute_Collection */
         $collection = Mage::getResourceModel('catalog/product_attribute_collection');
         $attributes = $collection
             ->addVisibleFilter()

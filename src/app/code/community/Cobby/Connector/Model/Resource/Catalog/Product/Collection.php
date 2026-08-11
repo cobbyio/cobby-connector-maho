@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0).
  */
 
-class Cobby_Connector_Model_Resource_Catalog_Product_Collection extends Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Collection
+class Cobby_Connector_Model_Resource_Catalog_Product_Collection extends Mage_Catalog_Model_Resource_Product_Collection
 {
     public function isEnabledFlat()
     {

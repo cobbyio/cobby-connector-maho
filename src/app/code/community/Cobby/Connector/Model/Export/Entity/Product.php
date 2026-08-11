@@ -73,10 +73,10 @@ class Cobby_Connector_Model_Export_Entity_Product extends Varien_Object
     /**
      * filter for active attributes
      *
-     * @param Mage_Eav_Model_Mysql4_Entity_Attribute_Collection $collection
-     * @return Mage_Eav_Model_Mysql4_Entity_Attribute_Collection
+     * @param Mage_Eav_Model_Resource_Entity_Attribute_Collection $collection
+     * @return Mage_Eav_Model_Resource_Entity_Attribute_Collection
      */
-    public function filterAttributeCollection(Mage_Eav_Model_Mysql4_Entity_Attribute_Collection $collection)
+    public function filterAttributeCollection(Mage_Eav_Model_Resource_Entity_Attribute_Collection $collection)
     {
         $collection->load();
 
@@ -124,7 +124,7 @@ class Cobby_Connector_Model_Export_Entity_Product extends Varien_Object
     /**
      * Entity attributes collection getter.
      *
-     * @return Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Attribute_Collection
+     * @return Mage_Catalog_Model_Resource_Product_Attribute_Collection
      */
     public function getAttributeCollection()
     {

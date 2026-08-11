@@ -51,6 +51,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
      * @param $observer
      * @return Cobby_Connector_Model_Observer
      */
+    #[\Maho\Config\Observer('model_config_data_save_before', id: 'Cobby_Connector')]
     public function saveCobbyConfigData($observer)
     {
         $config = $observer->getObject();
@@ -70,6 +71,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
      * @param $observer
      * @return $this
      */
+    #[\Maho\Config\Observer('catalog_category_delete_after', id: 'cobby_connector')]
     public function catalogCategoryDeleteAfter($observer)
     {
         $event = $observer->getEvent();
@@ -79,6 +81,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('category', self::DELETE, $category->getId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('catalog_category_save_after', id: 'cobby_connector')]
     public function catalogCategorySaveAfter($observer)
     {
         $event = $observer->getEvent();
@@ -95,6 +98,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
         }
     }
 
+    #[\Maho\Config\Observer('catalog_product_save_after', id: 'cobby_connector')]
     public function catalogProductSaveAfter($observer)
     {
         $event = $observer->getEvent();
@@ -105,6 +109,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('product', self::SAVE, $product->getId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('catalog_product_delete_after', id: 'cobby_connector')]
     public function catalogProductDeleteAfter($observer)
     {
         $event = $observer->getEvent();
@@ -115,6 +120,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('product', self::DELETE, $product->getId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('catalog_product_attribute_update_before', id: 'cobby_connector')]
     public function catalogProductAttributeUpdateBefore($observer)
     {
         $productIds = $observer->getData('product_ids');
@@ -124,6 +130,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('product', self::SAVE, $productIds); //constant has different value
     }
 
+    #[\Maho\Config\Observer('catalog_entity_attribute_save_after', id: 'cobby_connector')]
     public function catalogEntityAttributeSaveAfter($observer)
     {
         $event = $observer->getEvent();
@@ -151,21 +158,25 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
         return $this;
     }
 
+    #[\Maho\Config\Observer('customer_group_save_after', id: 'Cobby_Connector')]
     public function triggerCustomerGroupChanged($observer)
     {
         $this->_triggerObjectChanged($observer, Mage_Customer_Model_Group::ENTITY);
     }
 
+    #[\Maho\Config\Observer('admin_roles_save_after', id: 'Cobby_Connector')]
     public function triggerRoleChanged($observer)
     {
         $this->_triggerObjectChanged($observer, 'role');
     }
 
+    #[\Maho\Config\Observer('admin_user_save_after', id: 'Cobby_Connector')]
     public function triggerUserChanged($observer)
     {
         $this->_triggerObjectChanged($observer, 'user');
     }
 
+    #[\Maho\Config\Observer('fastsimpleimport_reindex_products_after', id: 'Cobby_Connector')]
     public function triggerAfterProductImport($observer)
     {
         $event = $observer->getEvent();
@@ -177,6 +188,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
         }
     }
 
+    #[\Maho\Config\Observer('sales_model_service_quote_submit_success', area: 'frontend', id: 'Cobby_Connector')]
     public function triggerCatalogProductByStock($observer)
     {
         $event = $observer->getEvent();
@@ -202,6 +214,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
 
     }
 
+    #[\Maho\Config\Observer('eav_entity_attribute_set_save_after', id: 'cobby_connector')]
     public function eavEntityAttributeSetSaveAfter($observer)
     {
         $event = $observer->getEvent();
@@ -210,6 +223,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('attributeset', self::SAVE, $object->getId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('eav_entity_attribute_set_delete_after', id: 'cobby_connector')]
     public function eavEntityAttributeSetDeleteAfter($observer)
     {
         $event = $observer->getEvent();
@@ -217,6 +231,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
         $this->queueHelper->enqueueAndNotify('attributeset', self::DELETE, $object->getId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('cataloginventory_stock_item_save_after', id: 'cobby_connector')]
     public function cataloginventoryStockItemSaveAfter($observer)
     {
         $event = $observer->getEvent();
@@ -226,6 +241,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
             ->enqueueAndNotify('stock', self::SAVE, $item->getProductId()); //constant has different value
     }
 
+    #[\Maho\Config\Observer('core_config_data_save_commit_after', id: 'cobby_connector')]
     public function coreConfigDataSaveCommitAfter($observer)
     {
         $relatedConfigSettings = array(
@@ -241,31 +257,37 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
         }
     }
 
+    #[\Maho\Config\Observer('store_save_after', id: 'cobby_connector')]
     public function storeSaveAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('store_changed');
     }
 
+    #[\Maho\Config\Observer('store_delete_after', id: 'cobby_connector')]
     public function storeDeleteAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('store_changed');
     }
 
+    #[\Maho\Config\Observer('store_group_save_after', id: 'cobby_connector')]
     public function storeGroupSaveAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('store_changed');
     }
 
+    #[\Maho\Config\Observer('store_group_delete_after', id: 'cobby_connector')]
     public function storeGroupDeleteAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('store_changed');
     }
 
+    #[\Maho\Config\Observer('website_save_after', id: 'cobby_connector')]
     public function websiteSaveAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('website_changed');
     }
 
+    #[\Maho\Config\Observer('website_delete_after', id: 'cobby_connector')]
     public function websiteDeleteAfter($observer)
     {
         $this->_triggerSetReindexCobbyRequired('website_changed');
@@ -276,6 +298,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
      * @param $observer
      * @return $this
      */
+    #[\Maho\Config\Observer('after_reindex_process_cobby_sync', id: 'Cobby_Connector')]
     public function updateCobbySyncStatus($observer)
     {
         Mage::getSingleton('index/indexer')
@@ -288,6 +311,7 @@ class Cobby_Connector_Model_Observer extends Mage_Core_Model_Abstract
     /**
      * @param $observer
      */
+    #[\Maho\Config\Observer('cobby_handle_changes', id: 'cobby_connector')]
     public function cobbyHandleChanges($observer)
     {
         $entity     = $observer->getEntity();

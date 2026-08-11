@@ -49,7 +49,7 @@ class Cobby_Connector_Model_Import_Product_Customoption extends Cobby_Connector_
                     'entity_id'        => $productId,
                     'has_options'      => 0,
                     'required_options' => 0,
-                    'updated_at'       => now()
+                    'updated_at'       => Mage::app()->getLocale()->formatDateForDb('now')
                 ),
                 'options' => array(),
                 'titles' => array(),
@@ -140,7 +140,16 @@ class Cobby_Connector_Model_Import_Product_Customoption extends Cobby_Connector_
 
         foreach($items as $productId => $item) {
             $this->connection->delete($optionTable, $this->connection->quoteInto('product_id = ?', $productId));
-            $this->connection->insertOnDuplicate($productTable, $item['product'], array('has_options', 'required_options', 'updated_at'));
+            // Plain UPDATE rather than insertOnDuplicate(): the product row always exists here
+            // (filtered by $existingProductIds above), and the INSERT branch would omit
+            // attribute_set_id and break its foreign key.
+            $productRow = $item['product'];
+            unset($productRow['entity_id']);
+            $this->connection->update(
+                $productTable,
+                $productRow,
+                array('entity_id = ?' => $productId)
+            );
             if($item['options'] && count($item['options']) > 0) {
                 $this->connection->insertOnDuplicate($optionTable, $item['options']);
                 $this->connection->insertOnDuplicate($titleTable, $item['titles'], array('title'));

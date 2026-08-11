@@ -1,13 +1,12 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <!--
   ~ @copyright Copyright (c) 2021 mash2 GmbH & Co. KG. All rights reserved.
   ~ @license http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0).
   -->
-
 <config>
     <modules>
         <Cobby_Connector>
-            <version>2.4.2</version>
+            <version>2.4.3.0</version>
         </Cobby_Connector>
     </modules>
     <global>
@@ -59,213 +58,6 @@
                 </observers>
             </cobby_clean_category_cache>
 
-            <model_config_data_save_before>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>saveCobbyConfigData</method>
-                    </Cobby_Connector>
-                </observers>
-            </model_config_data_save_before>
-
-            <catalog_category_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogCategoryDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_category_delete_after>
-
-            <catalog_category_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogCategorySaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_category_save_after>
-
-            <catalog_product_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogProductDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_product_delete_after>
-
-            <catalog_product_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogProductSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_product_save_after>
-
-            <catalog_product_attribute_update_before>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogProductAttributeUpdateBefore</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_product_attribute_update_before>
-
-            <catalog_entity_attribute_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>catalogEntityAttributeSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </catalog_entity_attribute_save_after>
-
-            <after_reindex_process_cobby_sync>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>updateCobbySyncStatus</method>
-                    </Cobby_Connector>
-                </observers>
-            </after_reindex_process_cobby_sync>
-
-            <customer_group_save_after>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>triggerCustomerGroupChanged</method>
-                    </Cobby_Connector>
-                </observers>
-            </customer_group_save_after>
-
-            <admin_roles_save_after>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>triggerRoleChanged</method>
-                    </Cobby_Connector>
-                </observers>
-            </admin_roles_save_after>
-
-            <admin_user_save_after>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>triggerUserChanged</method>
-                    </Cobby_Connector>
-                </observers>
-            </admin_user_save_after>
-
-            <fastsimpleimport_reindex_products_after>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>triggerAfterProductImport</method>
-                    </Cobby_Connector>
-                </observers>
-            </fastsimpleimport_reindex_products_after>
-
-            <eav_entity_attribute_set_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>eavEntityAttributeSetSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </eav_entity_attribute_set_save_after>
-
-            <eav_entity_attribute_set_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>eavEntityAttributeSetDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </eav_entity_attribute_set_delete_after>
-
-            <cataloginventory_stock_item_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>cataloginventoryStockItemSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </cataloginventory_stock_item_save_after>
-
-            <core_config_data_save_commit_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>coreConfigDataSaveCommitAfter</method>
-                    </cobby_connector>
-                </observers>
-            </core_config_data_save_commit_after>
-
-            <store_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>storeSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </store_save_after>
-
-            <store_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>storeDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </store_delete_after>
-
-            <store_group_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>storeGroupDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </store_group_delete_after>
-
-            <store_group_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>storeGroupSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </store_group_save_after>
-
-            <website_save_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>websiteSaveAfter</method>
-                    </cobby_connector>
-                </observers>
-            </website_save_after>
-
-            <website_delete_after>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>websiteDeleteAfter</method>
-                    </cobby_connector>
-                </observers>
-            </website_delete_after>
-
-            <cobby_handle_changes>
-                <observers>
-                    <cobby_connector>
-                        <class>cobby_connector/observer</class>
-                        <method>cobbyHandleChanges</method>
-                    </cobby_connector>
-                </observers>
-            </cobby_handle_changes>
-
         </events>
 
         <index>
@@ -284,24 +76,7 @@
         </resources>
     </global>
     <frontend>
-        <events>
-            <sales_model_service_quote_submit_success>
-                <observers>
-                    <Cobby_Connector>
-                        <class>cobby_connector/observer</class>
-                        <method>triggerCatalogProductByStock</method>
-                    </Cobby_Connector>
-                </observers>
-            </sales_model_service_quote_submit_success>
-        </events>
         <routers>
-            <cobby_connector>
-                <use>standard</use>
-                <args>
-                    <module>Cobby_Connector</module>
-                    <frontName>cobby-api</frontName>
-                </args>
-            </cobby_connector>
             <api>
                 <args>
                     <modules>
