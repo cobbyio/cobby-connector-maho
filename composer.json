@@ -1,6 +1,6 @@
 {
-	"name" : "cobbyio/cobby-connector-magento",
-	"description" : "This extension for Magento provides a direct integration of the cobby management methods to your Magento shop.",
+	"name" : "cobbyio/cobby-connector-maho",
+	"description" : "This extension for Maho provides a direct integration of the cobby management methods to your Maho shop.",
 	"license": "OSL-3.0",
 	"version" : "2.4.2",
 	"type" : "magento-module"
