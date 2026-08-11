@@ -10,9 +10,13 @@
 class Cobby_Connector_Model_Api_Server_Adapter_Json extends Varien_Object implements Mage_Api_Model_Server_Adapter_Interface
 {
     /**
-     * REST Server
+     * JSON-RPC Server
      *
-     * @var Zend_Json_Server
+     * Maho removed Zend Framework 1; its JSON-RPC server lives in
+     * Laminas\Json\Server (the same component Maho core's
+     * Mage_Api_Model_Server_Adapter_Jsonrpc uses).
+     *
+     * @var Laminas\Json\Server\Server
      */
     protected $_json = null;
 
@@ -71,14 +75,15 @@ class Cobby_Connector_Model_Api_Server_Adapter_Json extends Varien_Object implem
     {
         $apiConfigCharset = Mage::getStoreConfig("api/config/charset");
 
-        $this->_json = new Zend_Json_Server();
-        $this->_json->setAutoEmitResponse(false);
+        $this->_json = new Laminas\Json\Server\Server();
         $this->_json->setClass($this->getHandler());
+        // Return the response object from handle() instead of echoing it.
+        $this->_json->setReturnResponse(true);
 
         $this->getController()->getResponse()
             ->clearHeaders()
             ->setHeader('Content-Type','application/json; charset='.$apiConfigCharset)
-            ->setBody($this->_json->handle());
+            ->setBody((string) $this->_json->handle());
 
         return $this;
     }
@@ -88,10 +93,10 @@ class Cobby_Connector_Model_Api_Server_Adapter_Json extends Varien_Object implem
      *
      * @param int $code
      * @param string $message
-     * @throws Zend_Json_Server_Exception
+     * @throws Laminas\Json\Server\Exception\RuntimeException
      */
     public function fault($code, $message)
     {
-        throw new Zend_Json_Server_Exception($message, $code);
+        throw new Laminas\Json\Server\Exception\RuntimeException($message, $code);
     }
 }
