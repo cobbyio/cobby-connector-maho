@@ -18,16 +18,11 @@ class Cobby_Connector_Model_Resource_Queue extends Mage_Core_Model_Resource_Db_A
     protected function _beforeSave(Mage_Core_Model_Abstract $object)
     {
         parent::_beforeSave($object);
-
-        /** @var $dateModel Mage_Core_Model_Date */
-        $dateModel = Mage::getModel('core/date');
-
+        
         if ($object->isObjectNew()) {
-            $object->setData('created_at', $dateModel->gmtDate());
+            $object->setData('created_at', Mage::app()->getLocale()->formatDateForDb('now'));
         }
-
-        //$object->setData('updated_at', $dateModel->gmtDate());
-
+        
         return $this;
     }
 
